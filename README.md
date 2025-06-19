@@ -73,7 +73,7 @@ The application supports common image formats including:
 ### Character Sets
 
 - **Simple**: ` .:-=+*#%@` (10 characters)
-- **Detailed**: ` .'`^",:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$` (65+ characters)
+- **Detailed**: ` .'^",:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$` (65+ characters)
 
 ## Configuration
 
