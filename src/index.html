@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image to ASCII Art Converter</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+        .container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .upload-area {
+            border: 2px dashed #007bff;
+            border-radius: 8px;
+            padding: 40px 20px;
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s;
+            position: relative;
+        }
+        .upload-area:hover {
+            background-color: #f8f9fa;
+            border-color: #0056b3;
+        }
+        .upload-area input[type="file"] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .upload-area-text {
+            color: #007bff;
+            font-weight: bold;
+        }
+        #file-name {
+            margin-top: 15px;
+            color: #555;
+            font-style: italic;
+        }
+        .options {
+            margin-top: 30px;
+            text-align: left;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 15px;
+            color: #333;
+            font-weight: 500;
+        }
+        .options select, .options input[type="checkbox"] {
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+        .button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 30px;
+            width: 100%;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .button:disabled {
+            background-color: #a0a0a0;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>ASCII Art Generator</h1>
+    <p>Upload your image to convert it into text-based art.</p>
+    <form id="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+        <div class="upload-area" id="upload-area">
+            <input type="file" name="image" id="file-input" accept="image/*" required>
+            <span class="upload-area-text">Click to select an image</span>
+            <div id="file-name"></div>
+        </div>
+
+        <div class="options">
+            <label for="theme-select">Theme:
+                <select name="theme" id="theme-select">
+                    <option value="dark" selected>Dark (for terminals)</option>
+                    <option value="light">Light (for printing)</option>
+                </select>
+            </label>
+            <label for="detailed-checkbox">
+                <input type="checkbox" name="detailed" id="detailed-checkbox" value="true">
+                Use Detailed Character Set
+            </label>
+            <label for="full-res-checkbox">
+                <input type="checkbox" name="full_resolution" id="full-res-checkbox" value="true">
+                Use Full Resolution (may be slow)
+            </label>
+        </div>
+
+        <button type="submit" class="button" id="submit-button" disabled>Generate</button>
+    </form>
+</div>
+<script>
+    const fileInput = document.getElementById('file-input');
+    const fileNameDisplay = document.getElementById('file-name');
+    const submitButton = document.getElementById('submit-button');
+    const uploadArea = document.getElementById('upload-area');
+
+    fileInput.addEventListener('change', () => {
+        if (fileInput.files.length > 0) {
+            const fileName = fileInput.files[0].name;
+            fileNameDisplay.textContent = `Selected: ${fileName}`;
+            submitButton.disabled = false;
+        } else {
+            fileNameDisplay.textContent = '';
+            submitButton.disabled = true;
+        }
+    });
+
+    // Optional: Visual feedback for drag-and-drop
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        uploadArea.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        uploadArea.addEventListener(eventName, () => uploadArea.style.backgroundColor = '#e9ecef', false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        uploadArea.addEventListener(eventName, () => uploadArea.style.backgroundColor = '#fff', false);
+    });
+
+</script>
+</body>
+</html>
