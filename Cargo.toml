@@ -1,0 +1,19 @@
+[package]
+name = "png-to-ascii"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+actix-web = "4"
+actix-multipart = "0.6"
+actix-files = "0.6"
+futures-util = "0.3"
+sanitize-filename = "0.5"
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+url-escape = "0.1.1"
+
+# Keep our core dependencies
+image = "0.24"
+anyhow = "1.0"
+
+# Note: clap is no longer needed as we're not a CLI app anymore
